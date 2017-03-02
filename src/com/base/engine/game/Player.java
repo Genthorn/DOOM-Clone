@@ -1,5 +1,6 @@
 package com.base.engine.game;
 
+import com.base.engine.Game;
 import com.base.engine.renderEngine.Camera;
 import com.base.engine.renderEngine.Window;
 import com.base.engine.utils.Input;
@@ -11,22 +12,29 @@ import com.base.engine.utils.Vector3f;
 public class Player {
 	
 	private static final float MOUSE_SENSITIVITY = 0.15f;
-	private static final float MOVE_SPEED = 3.5f;
+	private static final float MOVE_SPEED = 2.0f;
 	private static final Vector3f zeroVector = new Vector3f(0,0,0);
+	private float sprint = 0;
 	
 	private Camera camera;
 	private boolean mouseLocked = false;
 	private Vector2f centerPosition = new Vector2f(Window.getWidth()/2, Window.getHeight()/2);
 	private Vector3f movementVector;
 	
+	public static final float PLAYER_SIZE = 0.2f;
+	
 	public Player(Vector3f position) {
+		movementVector = zeroVector;
 		camera = new Camera(position, new Vector3f(0,0,1), new Vector3f(0,1,0));
 		Transform.setCamera(camera);
 		Transform.setProjection(70, Window.getWidth(), Window.getHeight(), 0.01f, 1000f);
 	}
 	
 	public void input() {
-		float movAmt = (float)(MOVE_SPEED * Time.getDelta());
+		sprint = 0;
+		
+		if(Input.getKey(Input.KEY_LSHIFT))
+			sprint = 0.0002f;
 		
 		if(Input.getKey(Input.KEY_ESCAPE)) {
 			Input.setCursor(true);
@@ -50,11 +58,23 @@ public class Player {
 		if(Input.getKey(Input.KEY_D))
 			movementVector = movementVector.add(camera.getRight());
 		
+		if(Input.getKey(Input.KEY_UP))
+			camera.rotateX(-0.3f * MOUSE_SENSITIVITY);
+		if(Input.getKey(Input.KEY_DOWN))
+			camera.rotateX(0.3f * MOUSE_SENSITIVITY);
+		if(Input.getKey(Input.KEY_LEFT))
+			camera.rotateY(-0.3f * MOUSE_SENSITIVITY);
+		if(Input.getKey(Input.KEY_RIGHT))
+			camera.rotateY(0.3f * MOUSE_SENSITIVITY);
+		
+		float movAmt = (float)(MOVE_SPEED * Time.getDelta()) + sprint;
+		
 		movementVector.setY(0);
 		if(movementVector.length() > 0) 
 			movementVector = movementVector.normalized();
 		
-		camera.move(movementVector, movAmt);
+		if(movementVector.length() > 0)
+			camera.move(movementVector, movAmt);
 		
 		if(mouseLocked) {
 			Vector2f deltaPos = Input.getMousePosition().sub(centerPosition);
@@ -82,5 +102,9 @@ public class Player {
 	
 	public Camera getCamera() {
 		return camera;
+	}
+	
+	public Vector3f getPosition() {
+		return camera.getPos();
 	}
 }

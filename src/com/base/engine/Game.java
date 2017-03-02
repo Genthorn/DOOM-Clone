@@ -9,12 +9,12 @@ import com.base.engine.utils.Vector3f;
 
 public class Game {
 	
-	private Level level;
-	private Player player;
+	private static Level level;
+	private static Player player;
 	
 	public Game() {
-		level = new Level("levels/level1.png", "WolfCollection.png");
-		player = new Player(new Vector3f(0, 0.4375f, 0));
+		level = new Level("levels/level1.png", "tileset.png");
+		player = new Player(new Vector3f(20, 0.4375f, 18));
 	}
 	
 	public void input() {
@@ -30,5 +30,9 @@ public class Game {
 	public void render() {
 		level.render();
 		player.render();
+	}
+	
+	public static Level getLevel() {
+		return level;
 	}
 }

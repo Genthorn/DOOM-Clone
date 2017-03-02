@@ -39,13 +39,9 @@ public class Level {
 		generateLevel();
 	}
 	
-	public void input() {
-		
-	}
+	public void input() {}
 	
-	public void update() {
-		
-	}
+	public void update() {}
 	
 	public void render() {
 		shader.bind();

@@ -1,6 +1,5 @@
 package com.base.engine.renderEngine.lighting;
 
-import com.base.engine.utils.Attenuation;
 import com.base.engine.utils.Vector3f;
 
 public class PointLight {

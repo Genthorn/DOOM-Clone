@@ -1,4 +1,4 @@
-package com.base.engine.utils;
+package com.base.engine.renderEngine.lighting;
 
 public class Attenuation {
 	private float constant;

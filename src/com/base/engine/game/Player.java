@@ -11,6 +11,7 @@ import com.base.engine.utils.Vector3f;
 
 public class Player {
 	
+	public static final float PLAYER_SIZE = 0.15f;
 	private static final float MOUSE_SENSITIVITY = 0.15f;
 	private static final float MOVE_SPEED = 2.0f;
 	private static final Vector3f zeroVector = new Vector3f(0,0,0);
@@ -20,8 +21,6 @@ public class Player {
 	private boolean mouseLocked = false;
 	private Vector2f centerPosition = new Vector2f(Window.getWidth()/2, Window.getHeight()/2);
 	private Vector3f movementVector;
-	
-	public static final float PLAYER_SIZE = 0.2f;
 	
 	public Player(Vector3f position) {
 		movementVector = zeroVector;
@@ -67,15 +66,6 @@ public class Player {
 		if(Input.getKey(Input.KEY_RIGHT))
 			camera.rotateY(0.3f * MOUSE_SENSITIVITY);
 		
-		float movAmt = (float)(MOVE_SPEED * Time.getDelta()) + sprint;
-		
-		movementVector.setY(0);
-		if(movementVector.length() > 0) 
-			movementVector = movementVector.normalized();
-		
-		if(movementVector.length() > 0)
-			camera.move(movementVector, movAmt);
-		
 		if(mouseLocked) {
 			Vector2f deltaPos = Input.getMousePosition().sub(centerPosition);
 			
@@ -93,7 +83,20 @@ public class Player {
 	}
 	
 	public void update() {
+		float movAmt = (float)(MOVE_SPEED * Time.getDelta()) + sprint;
 		
+		movementVector.setY(0);
+		if(movementVector.length() > 0) 
+			movementVector = movementVector.normalized();
+		
+		Vector3f oldPos = camera.getPos();
+		Vector3f newPos = oldPos.add(movementVector.mul(movAmt));
+		
+		Vector3f collisionVector = Game.getLevel().checkCollision(oldPos, newPos, PLAYER_SIZE, PLAYER_SIZE);
+		movementVector = movementVector.mul(collisionVector);
+		
+		if(movementVector.length() > 0)
+			camera.move(movementVector, movAmt);
 	}
 
 	public void render() {

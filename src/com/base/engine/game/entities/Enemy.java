@@ -16,9 +16,9 @@ import com.base.engine.utils.Vertex;
 
 public class Enemy {
 	
-	public static final float SCALE = 0.7f;
+	public static final float SCALE = 0.8f;
 	public static final float SIZEY = SCALE;
-	public static final float SIZEX = (float)((double) SIZEY / (1.9310344827586206896551724137931 * 2.0));
+	public static final float SIZEX = (float)((double) SIZEY / (1.75 * 2.0));
 	public static final float START = 0;
 	
 	public static final float OFFSET_X = 0.05f;
@@ -55,7 +55,7 @@ public class Enemy {
 		
 		this.transform = transform;
 		this.transform.setTranslation(new Vector3f(23, 0.4375f, 19));
-		this.material = new Material(new Texture("SSWVA1.png"));
+		this.material = new Material(new Texture("ss_fstanding_1.png"));
 		
 		if(mesh == null) {
 			Vertex[] vertices = new Vertex[]{new Vertex(new Vector3f(-SIZEX,START,START), new Vector2f(TEX_MAX_X, TEX_MAX_Y)),

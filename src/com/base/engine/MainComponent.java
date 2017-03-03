@@ -6,7 +6,7 @@ import com.base.engine.utils.RenderUtil;
 import com.base.engine.utils.Time;
 
 public class MainComponent {
-	public static final int WIDTH = 800;
+	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 600;
 	public static final String TITLE = "FPS by: Evan Dawson | Mr. Yaghi - ICS2O1";
 	public static final double FRAME_CAP = 5000.0;

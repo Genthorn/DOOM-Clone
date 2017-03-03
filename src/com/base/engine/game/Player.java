@@ -57,10 +57,6 @@ public class Player {
 		if(Input.getKey(Input.KEY_D))
 			movementVector = movementVector.add(camera.getRight());
 		
-		if(Input.getKey(Input.KEY_UP))
-			camera.rotateX(-0.3f * MOUSE_SENSITIVITY);
-		if(Input.getKey(Input.KEY_DOWN))
-			camera.rotateX(0.3f * MOUSE_SENSITIVITY);
 		if(Input.getKey(Input.KEY_LEFT))
 			camera.rotateY(-0.3f * MOUSE_SENSITIVITY);
 		if(Input.getKey(Input.KEY_RIGHT))
@@ -69,15 +65,12 @@ public class Player {
 		if(mouseLocked) {
 			Vector2f deltaPos = Input.getMousePosition().sub(centerPosition);
 			
-			boolean rotY = deltaPos.getX() != 0;
-			boolean rotX = deltaPos.getY() != 0;
+			boolean rotX = deltaPos.getX() != 0;
 			
-			if(rotY)
-				camera.rotateY(deltaPos.getX() * MOUSE_SENSITIVITY);
 			if(rotX)
-				camera.rotateX(-deltaPos.getY() * MOUSE_SENSITIVITY);
+				camera.rotateY(deltaPos.getX() * MOUSE_SENSITIVITY);
 				
-			if(rotY || rotX)
+			if(rotX)
 				Input.setMousePosition(centerPosition);
 		}
 	}
